@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 const Header = () => {
-  const [pageState, setPageState] = useState("Sign in");
+  const [authPageState, setAuthPageState] = useState("Sign In");
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -46,7 +46,7 @@ const Header = () => {
               }`}
               onClick={() => navigate("/profile")}
             >
-              {pageState}
+              {authPageState}
             </li>
           </ul>
         </div>
