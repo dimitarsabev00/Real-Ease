@@ -44,7 +44,7 @@ const Header = () => {
                 (pathMatchRoute("/sign-in") || pathMatchRoute("/profile")) &&
                 "text-black border-b-red-500"
               }`}
-              onClick={() => navigate("/profile")}
+              onClick={() => navigate("/sign-in")}
             >
               {authPageState}
             </li>
