@@ -45,7 +45,7 @@ const SignUp = () => {
         createdAt: serverTimestamp(),
         uid: user.uid,
       });
-      toast.success("Sign up was successful");
+      toast.success("Sign Up was successful");
       navigate("/");
     } catch (error) {
       toast.error("Something went wrong with the registration");

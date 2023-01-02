@@ -1,7 +1,10 @@
+import { signInWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import GoogleAuthBtn from "../components/GoogleAuthBtn";
+import { auth } from "../configs/firebase";
 
 const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -10,6 +13,7 @@ const SignIn = () => {
     password: "",
   });
   const { email, password } = formData;
+  const navigate = useNavigate();
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
@@ -20,9 +24,18 @@ const SignIn = () => {
     e.preventDefault();
     try {
       //Added Sign-In Functionality
-      console.log("sign in");
+
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      if (userCredential.user) {
+        toast.success("Sign In was successful");
+        navigate("/");
+      }
     } catch (error) {
-      console.log(error);
+      toast.error("Invalid user credentials");
     }
   };
   return (
