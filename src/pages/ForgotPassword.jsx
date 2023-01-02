@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import GoogleAuthBtn from "../components/GoogleAuthBtn";
+import { auth } from "../configs/firebase";
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const onChange = (e) => {
@@ -9,7 +10,6 @@ const ForgotPassword = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      const auth = getAuth();
       await sendPasswordResetEmail(auth, email);
       toast.success("Email was sent");
     } catch (error) {
