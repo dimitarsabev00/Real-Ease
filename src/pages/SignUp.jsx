@@ -1,7 +1,11 @@
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import React, { useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import GoogleAuthBtn from "../components/GoogleAuthBtn";
+import { auth, db } from "../configs/firebase";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -11,6 +15,8 @@ const SignUp = () => {
     password: "",
   });
   const { fullName, email, password } = formData;
+  const navigate = useNavigate();
+
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
@@ -21,9 +27,28 @@ const SignUp = () => {
     e.preventDefault();
     try {
       //Added Sign-Up Functionality
-      console.log("sign up");
+
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      updateProfile(auth.currentUser, {
+        displayName: fullName,
+      });
+      const user = userCredential.user;
+
+      await setDoc(doc(db, "users", user.uid), {
+        fullName,
+        email,
+        createdAt: serverTimestamp(),
+        uid: user.uid,
+      });
+      toast.success("Sign up was successful");
+      navigate("/");
     } catch (error) {
-      console.log(error);
+      toast.error("Something went wrong with the registration");
     }
   };
   return (
