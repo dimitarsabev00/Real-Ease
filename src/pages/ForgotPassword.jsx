@@ -1,5 +1,7 @@
+import { sendPasswordResetEmail } from "firebase/auth";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import GoogleAuthBtn from "../components/GoogleAuthBtn";
 import { auth } from "../configs/firebase";
 const ForgotPassword = () => {
@@ -13,7 +15,7 @@ const ForgotPassword = () => {
       await sendPasswordResetEmail(auth, email);
       toast.success("Email was sent");
     } catch (error) {
-      toast.error("Could not send reset password");
+      toast.error("User not found with this email!");
     }
   };
   return (
