@@ -36,7 +36,7 @@ const Profile = () => {
 
         const docRef = doc(db, "users", auth.currentUser.uid);
         await updateDoc(docRef, {
-          name,
+          fullName: name,
         });
       }
       toast.success("Profile details updated");
