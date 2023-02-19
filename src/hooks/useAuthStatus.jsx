@@ -7,7 +7,6 @@ const useAuthStatus = () => {
   const [checkingStatus, setCheckingStatus] = useState(true);
 
   useEffect(() => {
-    console.log(auth);
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setLoggedIn(true);
