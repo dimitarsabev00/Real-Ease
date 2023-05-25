@@ -31,7 +31,7 @@ const ListingItem = ({ listing, id, onEdit, onDelete }) => {
             $
             {listing.offer
               ? listing?.discountedPrice
-                  .toString()
+                  ?.toString()
                   .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
               : listing?.regularPrice
                   .toString()
