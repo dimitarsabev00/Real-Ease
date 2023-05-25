@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { updateProfile } from "firebase/auth";
 import {
   collection,
+  deleteDoc,
   doc,
   getDocs,
   orderBy,
@@ -77,6 +78,20 @@ const Profile = () => {
   useEffect(() => {
     fetchUserListings();
   }, [auth.currentUser.uid]);
+
+  const onDelete = async (listingID) => {
+    if (window.confirm("Are you sure you want to delete?")) {
+      await deleteDoc(doc(db, "listings", listingID));
+      const updatedListings = listings.filter(
+        (listing) => listing.id !== listingID
+      );
+      setListings(updatedListings);
+      toast.success("Successfully deleted the listing");
+    }
+  };
+  function onEdit(listingID) {
+    navigate(`/edit-listing/${listingID}`);
+  }
   return (
     <>
       <section className="max-w-6xl mx-auto flex justify-center items-center flex-col">
@@ -149,7 +164,13 @@ const Profile = () => {
             </h2>
             <ul className="sm:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
               {listings.map(({ data, id }) => (
-                <ListingItem key={id} id={id} listing={data} />
+                <ListingItem
+                  key={id}
+                  id={id}
+                  listing={data}
+                  onDelete={() => onDelete(id)}
+                  onEdit={() => onEdit(id)}
+                />
               ))}
             </ul>
           </>
