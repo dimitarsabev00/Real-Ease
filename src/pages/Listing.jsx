@@ -89,10 +89,10 @@ const Listing = () => {
             {listing.name} - ${" "}
             {listing.offer
               ? listing.discountedPrice
-                  .toString()
+                  ?.toString()
                   .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
               : listing.regularPrice
-                  .toString()
+                  ?.toString()
                   .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             {listing.type === "rent" ? " / month" : ""}
           </p>
